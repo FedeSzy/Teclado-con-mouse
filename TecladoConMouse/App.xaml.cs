@@ -36,6 +36,14 @@ public partial class App : System.Windows.Application
             return;
         }
 
+        DispatcherUnhandledException += (_, args) =>
+        {
+            Registrar($"error (la app sigue abierta): {args.Exception}");
+            args.Handled = true;
+        };
+        AppDomain.CurrentDomain.UnhandledException += (_, args) => Registrar($"error fatal: {args.ExceptionObject}");
+        Registrar($"iniciada (pid {Environment.ProcessId})");
+
         var configuracion = Configuracion.Cargar();
         var diccionario = new Diccionario();
         diccionario.CargarBase(Path.Combine(AppContext.BaseDirectory, "Datos", "es_50k.txt"));
@@ -54,6 +62,7 @@ public partial class App : System.Windows.Application
 
     protected override void OnExit(ExitEventArgs e)
     {
+        if (teclado is not null) Registrar("cerrada normalmente");
         teclado?.Apagar();
         if (iconoBandeja is not null)
         {
@@ -85,6 +94,20 @@ public partial class App : System.Windows.Application
             ? $"Listo. Abrilo con {string.Join(" o ", configuracion.AtajosAbrir)}."
             : $"No se pudo registrar {string.Join(", ", teclado.AtajosFallidos)} (¿lo usa otra app?). Cambialo en configuracion.json.";
         iconoBandeja.ShowBalloonTip(3000, "Teclado con mouse", mensaje, Forms.ToolTipIcon.Info);
+    }
+
+    static void Registrar(string mensaje)
+    {
+        const long TamanioMaximo = 1_000_000;
+        try
+        {
+            Directory.CreateDirectory(Rutas.Carpeta);
+            if (File.Exists(Rutas.Registro) && new FileInfo(Rutas.Registro).Length > TamanioMaximo) File.Delete(Rutas.Registro);
+            File.AppendAllText(Rutas.Registro, $"[{DateTime.Now:yyyy-MM-dd HH:mm:ss}] {mensaje}{Environment.NewLine}");
+        }
+        catch (IOException)
+        {
+        }
     }
 
     static Icon CrearIcono()
