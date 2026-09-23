@@ -1,0 +1,37 @@
+<Window x:Class="TecladoConMouse.VentanaTeclado"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Teclado con mouse"
+        WindowStyle="None" AllowsTransparency="True" Background="Transparent"
+        Topmost="True" ShowInTaskbar="False" ShowActivated="False" ResizeMode="NoResize"
+        SizeToContent="WidthAndHeight" Focusable="False" UseLayoutRounding="True"
+        FontFamily="Segoe UI">
+    <Border CornerRadius="12" Background="#F21C1D21" BorderBrush="#33FFFFFF" BorderThickness="1" Padding="6">
+        <StackPanel>
+            <Grid Height="38" Margin="0,0,0,4">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="30"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="30"/>
+                </Grid.ColumnDefinitions>
+                <Border x:Name="Manija" Background="Transparent" Cursor="SizeAll">
+                    <TextBlock Text="⠿" Foreground="#80FFFFFF" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Border>
+                <TextBlock x:Name="TextoAyuda" Grid.Column="1" Foreground="#66FFFFFF" FontSize="13"
+                           HorizontalAlignment="Center" VerticalAlignment="Center"
+                           Text="deslizá sobre las letras · clic derecho borra · rueda = Enter"/>
+                <UniformGrid x:Name="BarraSugerencias" Grid.Column="1" Rows="1"/>
+                <Border x:Name="BotonCerrar" Grid.Column="2" Background="Transparent" Cursor="Hand">
+                    <TextBlock Text="✕" Foreground="#80FFFFFF" FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Border>
+            </Grid>
+            <Grid x:Name="AreaTeclas" Background="Transparent">
+                <Canvas x:Name="LienzoTeclas"/>
+                <Canvas IsHitTestVisible="False">
+                    <Polyline x:Name="Estela" Stroke="#4FC3F7" StrokeThickness="6" Opacity="0.85"
+                              StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round"/>
+                </Canvas>
+            </Grid>
+        </StackPanel>
+    </Border>
+</Window>
