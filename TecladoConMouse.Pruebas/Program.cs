@@ -226,6 +226,7 @@ sealed class SalidaFalsa : ISalidaTexto
     public string Texto { get; private set; } = "";
     public void Escribir(string texto) => Texto += texto;
     public void Borrar(int cantidad) => Texto = Texto[..Math.Max(0, Texto.Length - cantidad)];
+    public void BorrarPalabra() => Texto = Texto.TrimEnd()[..(Texto.TrimEnd().LastIndexOf(' ') + 1)];
     public void Enter() => Texto += "\n";
 }
 
@@ -282,6 +283,28 @@ static class PruebasControlador
             Verificar("tocar letras y aceptar sugerencia", "que ", s.Texto);
             c.Espacio();
             Verificar("espacio después de palabra con espacio automático no duplica", "que ", s.Texto);
+        }
+        {
+            var (c, s) = Nuevo();
+            c.Deslizar(Exacto("hola"));
+            foreach (var letra in "mund") c.TocarLetra(letra.ToString());
+            c.Borrar();
+            c.BorrarPalabra();
+            Verificar("doble clic derecho borra la palabra que se está tocando", "hola ", s.Texto);
+        }
+        {
+            var (c, s) = Nuevo();
+            s.Escribir("buscar en google");
+            c.Borrar();
+            c.BorrarPalabra();
+            Verificar("doble clic derecho borra una palabra escrita antes", "buscar en ", s.Texto);
+        }
+        {
+            var (c, s) = Nuevo();
+            c.Deslizar(Exacto("hola"));
+            c.Deslizar(Exacto("casa"));
+            c.BorrarPalabra();
+            Verificar("borrar palabra justo después de deslizar", "hola ", s.Texto);
         }
         {
             var (c, s) = Nuevo();

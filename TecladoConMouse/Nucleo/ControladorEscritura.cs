@@ -8,6 +8,7 @@ public interface ISalidaTexto
 {
     void Escribir(string texto);
     void Borrar(int cantidad);
+    void BorrarPalabra();
     void Enter();
 }
 
@@ -53,6 +54,8 @@ public sealed class ControladorEscritura
     public EstadoMayuscula Mayuscula { get; private set; }
 
     public IReadOnlyList<Sugerencia> Sugerencias { get; private set; } = Array.Empty<Sugerencia>();
+
+    public bool HayPalabraReciente => ultima is not null;
 
     public void Deslizar(IReadOnlyList<Punto> gesto)
     {
@@ -139,6 +142,25 @@ public sealed class ControladorEscritura
             MostrarCompletados();
         }
         else LimpiarSugerencias();
+    }
+
+    public void BorrarPalabra()
+    {
+        if (ultima is not null)
+        {
+            Borrar();
+            return;
+        }
+
+        espacioAutomatico = false;
+        if (enCurso.Length > 0)
+        {
+            salida.Borrar(enCurso.Length);
+            enCurso = "";
+            completados = new();
+        }
+        else salida.BorrarPalabra();
+        LimpiarSugerencias();
     }
 
     public void Enter()

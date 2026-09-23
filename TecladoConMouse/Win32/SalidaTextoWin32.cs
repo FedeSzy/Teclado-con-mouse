@@ -30,6 +30,18 @@ internal sealed class SalidaTextoWin32 : ISalidaTexto
         Enviar(eventos);
     }
 
+    public void BorrarPalabra()
+    {
+        var eventos = new List<INPUT>(4)
+        {
+            EventoTecla(VK_CONTROL, '\0', 0),
+            EventoTecla(VK_BACK, '\0', 0),
+            EventoTecla(VK_BACK, '\0', KEYEVENTF_KEYUP),
+            EventoTecla(VK_CONTROL, '\0', KEYEVENTF_KEYUP),
+        };
+        Enviar(eventos);
+    }
+
     public void Enter()
     {
         var eventos = new List<INPUT>(2);

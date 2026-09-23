@@ -40,6 +40,7 @@ public partial class VentanaTeclado : Window
     IReadOnlyList<Tecla> capa = DisposicionTeclado.Letras;
     Tecla? teclaPresionada;
     bool deslizando;
+    bool palabraBorradaAlPrimerClic;
     Action? accionRepetida;
     Nativo.POINT cursorInicioArrastre;
     Nativo.RECT ventanaInicioArrastre;
@@ -58,7 +59,7 @@ public partial class VentanaTeclado : Window
         AreaTeclas.MouseLeftButtonUp += AlSoltarTecla;
         AreaTeclas.LostMouseCapture += (_, _) => CancelarPresion();
 
-        MouseRightButtonDown += (_, e) => { e.Handled = true; IniciarRepeticion(controlador.Borrar); };
+        MouseRightButtonDown += AlPresionarClicDerecho;
         MouseRightButtonUp += (_, e) => { e.Handled = true; DetenerRepeticion(); };
         MouseDown += (_, e) =>
         {
@@ -364,6 +365,20 @@ public partial class VentanaTeclado : Window
     {
         controlador.Enter();
         if (configuracion.OcultarDespuesDeEnter) OcultarTeclado();
+    }
+
+    void AlPresionarClicDerecho(object sender, MouseButtonEventArgs e)
+    {
+        e.Handled = true;
+        if (e.ClickCount == 1)
+        {
+            palabraBorradaAlPrimerClic = controlador.HayPalabraReciente;
+            IniciarRepeticion(controlador.Borrar);
+        }
+        else if (e.ClickCount > 2 || !palabraBorradaAlPrimerClic)
+        {
+            controlador.BorrarPalabra();
+        }
     }
 
     void AlBotonLateral(int boton, bool presionado)

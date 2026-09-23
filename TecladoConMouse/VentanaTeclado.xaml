@@ -19,7 +19,7 @@
                 </Border>
                 <TextBlock x:Name="TextoAyuda" Grid.Column="1" Foreground="#66FFFFFF" FontSize="13"
                            HorizontalAlignment="Center" VerticalAlignment="Center"
-                           Text="deslizá sobre las letras · clic derecho borra · rueda = Enter"/>
+                           Text="deslizá · clic der. borra, doble = palabra · rueda = Enter"/>
                 <UniformGrid x:Name="BarraSugerencias" Grid.Column="1" Rows="1"/>
                 <Border x:Name="BotonCerrar" Grid.Column="2" Background="Transparent" Cursor="Hand">
                     <TextBlock Text="✕" Foreground="#80FFFFFF" FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Center"/>

@@ -26,7 +26,7 @@ internal static class Nativo
 
     public const uint INPUT_KEYBOARD = 1;
     public const uint KEYEVENTF_KEYUP = 0x2, KEYEVENTF_UNICODE = 0x4;
-    public const ushort VK_BACK = 0x08, VK_RETURN = 0x0D;
+    public const ushort VK_BACK = 0x08, VK_RETURN = 0x0D, VK_CONTROL = 0x11;
 
     [StructLayout(LayoutKind.Sequential)]
     public struct POINT { public int X, Y; }

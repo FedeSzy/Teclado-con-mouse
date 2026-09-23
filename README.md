@@ -21,6 +21,7 @@ Escribe directamente en la app que tengas abierta (navegador, Word, WhatsApp, Di
 | Letra suelta | Clic en la tecla (aparecen sugerencias arriba) |
 | Cambiar la palabra por otra sugerencia | Clic en la sugerencia, o **tilt de la rueda** izquierda/derecha |
 | Borrar | **Clic derecho** en el teclado, **botón lateral de atrás** o ⌫. Después de deslizar, borra la palabra entera |
+| Borrar la palabra completa | **Doble clic derecho** en el teclado |
 | Aceptar sugerencia / espacio | **Botón lateral de adelante** |
 | Enter | **Clic de la rueda** en el teclado, o ⏎ |
 | Mayúscula | ⇧ una vez = próxima letra, dos veces = bloqueo. Después de `. ? !` se activa sola |
